@@ -1,0 +1,32 @@
+{
+  "name": "soundix",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pick UI sounds for your events from CC0 packs, hear them on a mock UI and download them for Roblox or the web.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "library": "node scripts/build-library.mjs",
+    "format": "prettier --write src scripts"
+  },
+  "dependencies": {
+    "idb-keyval": "^6.3.0",
+    "jszip": "^3.10.2",
+    "lz-string": "^1.5.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "prettier": "^3.9.9",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+public/library/
+.claude/
+*.log
+.playwright-mcp/

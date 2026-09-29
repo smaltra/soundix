@@ -1,0 +1,16 @@
+[
+  { "id": "ui-audio", "name": "UI Audio", "author": "Kenney", "url": "https://kenney.nl/assets/ui-audio", "license": "CC0" },
+  { "id": "interface-sounds", "name": "Interface Sounds", "author": "Kenney", "url": "https://kenney.nl/assets/interface-sounds", "license": "CC0" },
+  { "id": "rpg-audio", "name": "RPG Audio", "author": "Kenney", "url": "https://kenney.nl/assets/rpg-audio", "license": "CC0" },
+  { "id": "casino-audio", "name": "Casino Audio", "author": "Kenney", "url": "https://kenney.nl/assets/casino-audio", "license": "CC0" },
+  { "id": "digital-audio", "name": "Digital Audio", "author": "Kenney", "url": "https://kenney.nl/assets/digital-audio", "license": "CC0" },
+  { "id": "impact-sounds", "name": "Impact Sounds", "author": "Kenney", "url": "https://kenney.nl/assets/impact-sounds", "license": "CC0" },
+  { "id": "music-jingles", "name": "Music Jingles", "author": "Kenney", "url": "https://kenney.nl/assets/music-jingles", "license": "CC0" },
+  { "id": "sci-fi-sounds", "name": "Sci-Fi Sounds", "author": "Kenney", "url": "https://kenney.nl/assets/sci-fi-sounds", "license": "CC0" },
+  { "id": "voiceover-pack", "name": "Voiceover", "author": "Kenney", "url": "https://kenney.nl/assets/voiceover-pack", "license": "CC0" },
+  { "id": "voiceover-pack-fighter", "name": "Voiceover Fighter", "author": "Kenney", "url": "https://kenney.nl/assets/voiceover-pack-fighter", "license": "CC0" },
+  { "id": "rpg-sound-pack", "name": "RPG Sound Pack", "author": "artisticdude", "url": "https://opengameart.org/content/rpg-sound-pack", "license": "CC0" },
+  { "id": "retro-512", "name": "512 Retro (8-bit)", "author": "Juhani Junkala", "url": "https://opengameart.org/content/512-sound-effects-8-bit-style", "license": "CC0" },
+  { "id": "level-up-13", "name": "Level Up 13", "author": "wobbleboxx", "url": "https://opengameart.org/content/level-up-power-up-coin-get-13-sounds", "license": "CC0" },
+  { "id": "menu-7", "name": "Menu 7", "author": "Joth", "url": "https://opengameart.org/content/7-assorted-sound-effects-menu-level-up", "license": "CC0" }
+]

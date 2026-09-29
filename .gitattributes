@@ -1,0 +1,7 @@
+* text=auto eol=lf
+packs/** -text
+*.ogg binary
+*.wav binary
+*.mp3 binary
+*.aif binary
+*.flac binary

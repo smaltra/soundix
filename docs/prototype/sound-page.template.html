@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Звуки кита</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#111318;--panel:#1a1d24;--panel2:#20242d;--line:#2b303b;--text:#e9ebf1;--mute:#8b91a1;--acc:#3b82f6;--ok:#22c55e;--warn:#f59e0b}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,"Segoe UI",sans-serif;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer;color:inherit}input,select{font:inherit}
+header{display:flex;gap:16px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header h1{font-size:17px;margin:0 8px 0 0}.ctl{display:flex;gap:8px;align-items:center;color:var(--mute)}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 12px}.btn:hover{border-color:#3a4150}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.app{flex:1;display:grid;grid-template-columns:300px 1fr 380px;min-height:0}
+aside,section,.try{min-height:0;overflow:auto}
+aside{border-right:1px solid var(--line);padding:12px}
+.grp{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin:12px 4px 6px}
+.ev{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:6px;cursor:pointer}
+.ev.cur{border-color:var(--acc);background:#18233a}.ev .t{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.ev b{font-weight:600}.ev .d{color:var(--mute);font-size:12px}.ev .pk{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:12px}
+.ev .pk span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ok)}.ev .pk span.none{color:var(--mute)}.ev .vol span.none{flex:none}.ev .vol input{flex:1;min-width:0}.ev .vol b{font-size:12px;width:40px;text-align:right}
+.mini{border:0;background:var(--acc);color:#fff;border-radius:6px;width:26px;height:22px;font-size:11px}
+.x{border:0;background:none;color:var(--mute);width:20px}.x:hover{color:#fff}
+.prog{color:var(--mute);font-size:12px;margin:0 4px}
+section{padding:12px 16px}
+.head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.head h2{margin:0;font-size:18px}.head .d{color:var(--mute)}
+.bar{display:flex;gap:8px;align-items:center;margin:10px 0;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}.seg button{background:var(--panel);border:0;padding:6px 12px}.seg button.on{background:var(--acc);color:#fff}
+input[type=search]{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 10px;border-radius:8px;width:220px}
+select{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px;border-radius:8px}
+.short{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.chip{display:flex;align-items:center;gap:6px;background:#2a2410;border:1px solid #5b4a15;border-radius:999px;padding:3px 6px 3px 10px;font-size:12px}
+.rows{display:block}.pk-h{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin:14px 2px 6px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px}
+.r{display:grid;grid-template-columns:28px 1fr 44px 24px 64px;gap:6px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:3px 6px;font-size:13px}
+.r:hover{border-color:#394050}.r.cur{border-color:var(--acc)}.r.chosen{border-color:var(--ok)}
+.r .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.r .pack{color:var(--mute);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r .dur{color:var(--mute);font-size:12px;text-align:right}.play{border:0;background:var(--acc);color:#fff;border-radius:5px;height:24px;font-size:11px}
+.star{border:0;background:none;font-size:16px;color:#6b7280}.star.on{color:#fbbf24}
+.pick{border:1px solid var(--line);background:var(--panel2);border-radius:5px;height:24px;font-size:12px}.pick.on{background:var(--ok);border-color:var(--ok);color:#06240f}
+.empty{color:var(--mute);padding:20px}
+.try{border-left:1px solid var(--line);padding:12px 14px;background:#0e1014}
+.app{grid-template-columns:280px 1fr 360px}
+.try h3{margin:0 0 4px;font-size:15px}.try .d{color:var(--mute);font-size:12px;margin-bottom:10px}
+.stage{background:linear-gradient(#27415e,#1f3b27);border-radius:12px;padding:14px;position:relative;min-height:520px;overflow:hidden}
+.m{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:3px solid #0b0b10;border-radius:4px;color:#fff;font-weight:800;text-shadow:0 1px 0 #000,1px 0 0 #000,-1px 0 0 #000,0 -1px 0 #000;box-shadow:inset 0 -6px 0 rgba(0,0,0,.28);transition:transform .12s ease,filter .12s ease;user-select:none}
+.m:hover{transform:scale(1.05);filter:brightness(1.15)}.m:active{transform:scale(.94);filter:brightness(.9);box-shadow:inset 0 -2px 0 rgba(0,0,0,.28)}
+.gold{background:linear-gradient(#fdd760,#f7942d)}.blue{background:linear-gradient(#0ba2f5,#1a68ad)}.green{background:linear-gradient(#2ed646,#2a8c12)}.purple{background:linear-gradient(#c23cfa,#7e36e0)}.red{background:linear-gradient(#e5484b,#b02a2d)}.gray{background:linear-gradient(#8f95ba,#53566f)}
+.tile{width:84px;height:84px;flex-direction:column;font-size:12px}.tile .ic{font-size:34px;text-shadow:none}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.btnm{padding:8px 14px;font-size:14px}
+.tog{width:76px;height:30px;background:#444b59;border:3px solid #0b0b10;border-radius:4px;position:relative;cursor:pointer}
+.tog i{position:absolute;top:2px;left:2px;width:34px;height:20px;background:#cfd3dc;border-radius:2px;transition:left .15s}.tog.on{background:#2ed646}.tog.on i{left:34px}
+.tabs{display:inline-flex;border:3px solid #0b0b10;border-radius:4px;overflow:hidden}.tabs button{background:#2a2f38;border:0;padding:6px 10px;color:#cfd3dc;font-weight:700}.tabs button.on{background:linear-gradient(#fdd760,#f7942d);color:#fff;text-shadow:0 1px 0 #000}
+.slot{width:44px;height:44px;font-size:20px}.slot .k{position:absolute;left:3px;top:0;font-size:11px}.slot.sel{outline:3px solid #fff;outline-offset:1px}
+.lock{width:64px;height:64px;font-size:26px}.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.coins{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.35);padding:4px 10px;border-radius:6px;font-weight:800;font-size:18px}
+.win{position:absolute;left:50%;top:50%;width:260px;transform:translate(-50%,-50%) scale(.65);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.3,1.4,.5,1),opacity .15s;background:#2a2f38;border:3px solid #0b0b10;border-radius:4px}
+.win.on{transform:translate(-50%,-50%) scale(1);opacity:.97;pointer-events:auto}
+.win .hd{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;color:#fff;font-weight:800}.win .bd{padding:14px;color:#cfd3dc;font-size:13px}
+.xclose{width:30px;height:30px;font-size:16px}
+.toast{position:absolute;left:50%;top:10px;transform:translate(-50%,-80px);transition:transform .25s;background:#2a2f38;border:3px solid #0b0b10;border-radius:4px;padding:8px 14px;color:#fff;font-weight:700}.toast.on{transform:translate(-50%,0)}
+.float{position:absolute;font-weight:900;color:#fde047;text-shadow:0 2px 0 #000;animation:fl 1s forwards;pointer-events:none}@keyframes fl{to{transform:translateY(-50px);opacity:0}}
+kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:12px}
+@media (max-width:1200px){.app{grid-template-columns:260px 1fr}.try{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}}
+</style></head><body>
+<header>
+ <h1>Звуки кита</h1>
+ <label class="ctl">Громкость прослушки <input id="vol" type="range" min="0" max="1" step="0.05" value="1"></label>
+ <label class="ctl">Разброс высоты ± <input id="vary" type="range" min="0" max="10" step="1" value="5"> <b id="varyV">5 %</b> <span>→ в кит</span></label>
+ <span class="ctl"><kbd>↑</kbd><kbd>↓</kbd> слушать · <kbd>Enter</kbd> выбрать · <kbd>S</kbd> в избранное</span>
+ <span style="flex:1"></span>
+ <button class="btn primary" id="copy">Скопировать выбор</button>
+</header>
+<div class="app">
+ <aside id="events"></aside>
+ <section>
+  <div class="head"><h2 id="evName"></h2><span class="d" id="evDesc"></span></div>
+  <div class="bar">
+   <div class="seg"><button id="mAll" class="on">Все звуки</button><button id="mSug">Подходящие для события</button></div>
+   <input id="q" type="search" placeholder="Поиск: coin, switch, jingle…">
+   <select id="pack"><option value="">Все паки</option></select>
+   <span class="ctl" id="count"></span>
+  </div>
+  <div class="short" id="short"></div>
+  <div class="rows" id="rows"></div>
+ </section>
+ <div class="try">
+  <h3>Проверить в деле</h3>
+  <div class="d">Здесь играют выбранные звуки. Наведи мышь, нажимай, открывай окна.</div>
+  <div class="stage" id="stage">
+   <div class="row"><span class="coins">🪙 <span id="coinN">1 250</span></span></div>
+   <div class="row">
+    <div class="m tile gold" data-click data-hover id="tShop"><div class="ic">🛒</div>Магазин</div>
+    <div class="m tile green" data-click data-hover data-open="Индекс"><div class="ic">📕</div>Индекс</div>
+    <div class="m tile purple" data-click data-hover data-open="Коды"><div class="ic">🎟️</div>Коды</div>
+   </div>
+   <div class="row">
+    <div class="m btnm blue" data-click data-hover data-open="Окно">Открыть окно</div>
+    <div class="m btnm gray" data-click data-hover id="bToast">Тост</div>
+   </div>
+   <div class="row">
+    <div class="m btnm green" data-click data-hover id="bReward">Награда</div>
+    <div class="m btnm red" data-click data-hover id="bError">Ошибка</div>
+    <div class="m btnm gold" data-click data-hover id="bBuy">Купить 🪙500</div>
+   </div>
+   <div class="row">
+    <div class="m btnm gold" data-click data-hover id="bCount">+ монеты</div>
+    <div class="tog" id="tog"><i></i></div>
+    <div class="m lock gray" id="bLock">🔒</div>
+   </div>
+   <div class="row"><div class="tabs" id="tabs"><button class="on">Монеты</button><button>Кристаллы</button><button>Робуксы</button></div></div>
+   <div class="row" id="slots"></div>
+   <div class="win" id="win"><div class="hd gold" id="winHd"><span id="winT">Окно</span><div class="m xclose red" data-hover id="bClose">✕</div></div><div class="bd">Нажми ✕, чтобы закрыть.</div></div>
+   <div class="toast" id="toast">Код активирован!</div>
+  </div>
+ </div>
+</div>
+<script>
+const SOUNDS = __SOUNDS__;
+const EVENTS = [
+ {id:"click",name:"Клик",desc:"нажатие любой кнопки",g:"main",kw:["click","mouseclick","select","tap","tick","button","menu_select","menu confirm","blip"]},
+ {id:"hover",name:"Наведение",desc:"мышь навели на кнопку (только ПК)",g:"main",kw:["rollover","click","tick","glass","select","menu_move","menu move","blip"]},
+ {id:"open",name:"Открытие окна",desc:"окно открылось",g:"main",kw:["open","maximize","confirmation","drop","pluck","bookopen","phasejump","pause","transition","dooropen","portal"]},
+ {id:"close",name:"Закрытие окна",desc:"окно закрылось",g:"main",kw:["close","minimize","back","drop","bookclose","pause","transition"]},
+ {id:"toggle",name:"Переключатель",desc:"ВКЛ/ВЫКЛ, чекбокс",g:"main",kw:["switch","toggle","click","tick","metalclick","metallatch","interaction","blip"]},
+ {id:"toast",name:"Тост",desc:"всплыло уведомление",g:"main",kw:["pluck","bong","glass","confirmation","bubble","twotone","pepsound","high","neutral","interaction"]},
+ {id:"reward",name:"Награда",desc:"получил награду",g:"main",kw:["jingles","powerup","power_up","coin","confirmation","level_up","congratulations","correct","threetone","fanfare","level up","rise","upper","ability learn","item pickup"]},
+ {id:"error",name:"Ошибка",desc:"нельзя, не хватает",g:"main",kw:["error","wrong","back","lowdown","phaserdown","you_lose","question","negative","menu error","downer"]},
+ {id:"shop",name:"Открытие магазина",desc:"особый звук: монеты, колокольчик",g:"main",kw:["coin","handlecoins","chips","jingles","impactbell","metal-ringing","coin_double","coin_cluster"]},
+ {id:"purchase",name:"Покупка прошла",desc:"«кэш» после оплаты",g:"extra",kw:["coin","chips","handlecoins","confirmation","powerup","correct","coin_double","coin_cluster","fanfare"]},
+ {id:"counter",name:"Счётчик валюты",desc:"цифры монет растут",g:"extra",kw:["coin","chip-lay","chips-stack","tick","click","pepsound","coin_single","blip"]},
+ {id:"locked",name:"Закрыто",desc:"нажал на закрытое",g:"extra",kw:["error","door","metallatch","impactwood","knock","wrong","creak","negative","noammo","menu error"]},
+ {id:"tab",name:"Вкладка",desc:"переключение вкладки",g:"extra",kw:["switch","click","select","tick","bookflip","card-slide","menu_move","menu move","interaction"]},
+ {id:"slot",name:"Выбор слота",desc:"хотбар, клавиши 1–4",g:"extra",kw:["select","handle","cloth","belthandle","drawknife","sword-unsheathe","card-place","menu_select","item pickup","interaction"]},
+];
+const store = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } };
+let picks = store("kitSoundPicks") || {}; let stars = store("kitSoundStars") || {}; let evId = store("kitSoundEvent") || "click";
+let mode = "all", list = [], cur = -1;
+let vols = store("kitSoundVols") || {}; let vary = store("kitSoundVary"); if (vary === null) vary = 5;
+const $ = id => document.getElementById(id);
+const ev = () => EVENTS.find(e => e.id === evId);
+const byF = f => SOUNDS.find(s => s.f === f);
+function play(f, v) { if (!f) return; const a = new Audio(f); a.volume = Math.min(1, +$("vol").value * (v === undefined ? 1 : v)); a.preservesPitch = false; const r = vary / 100; a.playbackRate = 1 - r + Math.random() * 2 * r; a.play().catch(() => {}); }
+const volOf = id => (vols[id] === undefined ? 0.8 : vols[id]);
+const playEv = id => play(picks[id], volOf(id));
+function renderEvents() {
+  const box = $("events"); box.innerHTML = "";
+  const main = EVENTS.filter(e => e.g === "main"), done = main.filter(e => picks[e.id]).length;
+  box.insertAdjacentHTML("beforeend", `<div class="grp">Основные <span class="prog">${done} из ${main.length}</span></div>`);
+  const card = e => {
+    const d = document.createElement("div"); d.className = "ev" + (e.id === evId ? " cur" : "");
+    const s = picks[e.id] ? byF(picks[e.id]) : null;
+    d.innerHTML = `<div class="t"><b>${e.name}</b></div><div class="d">${e.desc}</div>
+      <div class="pk">${s ? `<button class="mini">▶</button><span title="${s.f}">${s.n} · ${s.p}</span><button class="x" title="Убрать">✕</button>` : `<span class="none">не выбран</span>`}</div>${s ? `<div class="pk vol"><span class="none">громкость</span><input type="range" min="0" max="1" step="0.05" value="${volOf(e.id)}"><b>${Math.round(volOf(e.id) * 100)} %</b></div>` : ""}`;
+    d.onclick = () => { evId = e.id; store("kitSoundEvent", evId); cur = -1; renderAll(); };
+    if (s) { const vr = d.querySelector(".vol input"); vr.onclick = x => x.stopPropagation(); vr.oninput = () => { vols[e.id] = +vr.value; store("kitSoundVols", vols); d.querySelector(".vol b").textContent = Math.round(vr.value * 100) + " %"; }; vr.onchange = () => playEv(e.id); d.querySelector(".mini").onclick = x => { x.stopPropagation(); playEv(e.id); }; d.querySelector(".x").onclick = x => { x.stopPropagation(); delete picks[e.id]; store("kitSoundPicks", picks); renderAll(); }; }
+    box.appendChild(d);
+  };
+  main.forEach(card);
+  box.insertAdjacentHTML("beforeend", `<div class="grp">Дополнительные <span class="prog">по желанию</span></div>`);
+  EVENTS.filter(e => e.g === "extra").forEach(card);
+}
+function matches(s, e) { const n = s.n.toLowerCase(); return e.kw.some(k => n.includes(k)); }
+function renderList() {
+  const e = ev(); $("evName").textContent = e.name; $("evDesc").textContent = "— " + e.desc;
+  $("mSug").classList.toggle("on", mode === "sug"); $("mAll").classList.toggle("on", mode === "all");
+  const q = $("q").value.trim().toLowerCase(), pk = $("pack").value;
+  list = SOUNDS.filter(s => (mode === "all" || matches(s, e)) && (!q || s.n.toLowerCase().includes(q)) && (!pk || s.p === pk));
+  if (mode === "sug") list.sort((a, b) => 0); if (false) list.sort((a, b) => e.kw.findIndex(k => a.n.toLowerCase().includes(k)) - e.kw.findIndex(k => b.n.toLowerCase().includes(k)) || a.d - b.d);
+  $("count").textContent = list.length + " звуков";
+  const st = stars[e.id] || [];
+  $("short").innerHTML = st.length ? "" : `<span class="ctl">★ — избранное для сравнения появится здесь</span>`;
+  st.forEach(f => { const s = byF(f); if (!s) return; const c = document.createElement("div"); c.className = "chip"; c.innerHTML = `<button class="mini">▶</button>${s.n}<button class="x">✕</button>`; c.querySelector(".mini").onclick = () => play(f); c.querySelector(".x").onclick = () => toggleStar(f); $("short").appendChild(c); });
+  const rows = $("rows"); rows.innerHTML = "";
+  if (!list.length) { rows.innerHTML = `<div class="empty">Ничего не нашлось. Попробуй «Все звуки» или другой поиск.</div>`; return; }
+  let grid = null, lastPack = null;
+  list.forEach((s, i) => {
+    if (s.p !== lastPack) { lastPack = s.p; rows.insertAdjacentHTML("beforeend", `<div class="pk-h">${s.p}</div>`); grid = document.createElement("div"); grid.className = "grid"; rows.appendChild(grid); }
+    const r = document.createElement("div"); r.className = "r" + (i === cur ? " cur" : "") + (picks[e.id] === s.f ? " chosen" : "");
+    const on = (stars[e.id] || []).includes(s.f);
+    r.innerHTML = `<button class="play">▶</button><span class="n" title="${s.f}">${s.n}</span><span class="dur">${s.d.toFixed(1)} с</span><button class="star${on ? " on" : ""}" title="В избранное (S)">★</button><button class="pick${picks[e.id] === s.f ? " on" : ""}">${picks[e.id] === s.f ? "✓" : "Выбрать"}</button>`;
+    r.querySelector(".play").onclick = x => { x.stopPropagation(); setCur(i); play(s.f); };
+    r.querySelector(".star").onclick = x => { x.stopPropagation(); toggleStar(s.f); };
+    r.querySelector(".pick").onclick = x => { x.stopPropagation(); choose(s.f); };
+    r.onclick = () => { setCur(i); play(s.f); };
+    grid.appendChild(r);
+  });
+}
+function setCur(i) { const rs = $("rows").querySelectorAll(".r"); if (rs[cur]) rs[cur].classList.remove("cur"); cur = i; if (rs[cur]) { rs[cur].classList.add("cur"); rs[cur].scrollIntoView({ block: "nearest" }); } }
+function choose(f) { picks[evId] = f; store("kitSoundPicks", picks); renderAll(); }
+function toggleStar(f) { const a = stars[evId] || []; const i = a.indexOf(f); if (i >= 0) a.splice(i, 1); else a.push(f); stars[evId] = a; store("kitSoundStars", stars); renderList(); }
+function renderAll() { renderEvents(); renderList(); }
+[...new Set(SOUNDS.map(s => s.p))].forEach(p => $("pack").insertAdjacentHTML("beforeend", `<option>${p}</option>`));
+$("mSug").onclick = () => { mode = "sug"; cur = -1; renderList(); }; $("mAll").onclick = () => { mode = "all"; cur = -1; renderList(); };
+$("q").oninput = () => { cur = -1; renderList(); }; $("pack").onchange = () => { cur = -1; renderList(); };
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+  if (e.key === "ArrowDown" && list.length) { e.preventDefault(); setCur(Math.min(cur + 1, list.length - 1)); play(list[cur].f); }
+  else if (e.key === "ArrowUp" && list.length) { e.preventDefault(); setCur(Math.max(cur - 1, 0)); play(list[cur].f); }
+  else if (e.key === "Enter" && list[cur]) { choose(list[cur].f); }
+  else if ((e.key === "s" || e.key === "S" || e.key === "ы" || e.key === "Ы") && list[cur]) { toggleStar(list[cur].f); }
+  else if (["1","2","3","4"].includes(e.key)) { selectSlot(+e.key - 1); }
+});
+$("copy").onclick = () => { const t = EVENTS.map(e => `${e.name}: ${picks[e.id] ? picks[e.id] + " · громкость " + Math.round(volOf(e.id) * 100) + " %" : "-"}`).join("\n") + `\nРазброс высоты: ±${vary} %`; navigator.clipboard.writeText(t).then(() => { $("copy").textContent = "Скопировано ✓"; setTimeout(() => $("copy").textContent = "Скопировать выбор", 1500); }); };
+// Mock UI
+document.querySelectorAll("[data-hover]").forEach(el => el.addEventListener("pointerenter", p => { if (p.pointerType === "mouse") playEv("hover"); }));
+document.querySelectorAll("[data-click]").forEach(el => el.addEventListener("click", () => playEv("click")));
+let openWin = null;
+function openWindow(title, color) { if (openWin) closeWindow(true); $("winT").textContent = title; $("winHd").className = "hd " + (color || "gold"); $("win").classList.add("on"); openWin = title; }
+function closeWindow(silent) { $("win").classList.remove("on"); openWin = null; if (!silent) playEv("close"); }
+document.querySelectorAll("[data-open]").forEach(el => el.addEventListener("click", () => { const t = el.dataset.open; if (openWin === t) { closeWindow(); return; } setTimeout(() => { playEv("open"); openWindow(t, t === "Индекс" ? "green" : t === "Коды" ? "purple" : "blue"); }, 30); }));
+$("tShop").addEventListener("click", () => { if (openWin === "Магазин") { closeWindow(); return; } setTimeout(() => { playEv(picks.shop ? "shop" : "open"); openWindow("Магазин", "gold"); }, 30); });
+$("bClose").addEventListener("click", () => closeWindow());
+$("bToast").addEventListener("click", () => { playEv("toast"); $("toast").classList.add("on"); setTimeout(() => $("toast").classList.remove("on"), 1600); });
+function floatText(el, text, color) { const f = document.createElement("div"); f.className = "float"; f.textContent = text; if (color) f.style.color = color; const r = el.getBoundingClientRect(), s = $("stage").getBoundingClientRect(); f.style.left = (r.left - s.left + r.width / 2 - 20) + "px"; f.style.top = (r.top - s.top - 10) + "px"; $("stage").appendChild(f); setTimeout(() => f.remove(), 1000); }
+$("bReward").addEventListener("click", e => { playEv("reward"); floatText(e.currentTarget, "+100 🎁"); });
+$("bError").addEventListener("click", e => { playEv("error"); e.currentTarget.classList.remove("shake"); void e.currentTarget.offsetWidth; e.currentTarget.classList.add("shake"); });
+$("bBuy").addEventListener("click", e => { playEv("purchase"); floatText(e.currentTarget, "Куплено!", "#86efac"); });
+let coins = 1250;
+$("bCount").addEventListener("click", () => { let n = 0; const t = setInterval(() => { n++; coins += 10; $("coinN").textContent = coins.toLocaleString("ru-RU"); playEv("counter"); if (n >= 6) clearInterval(t); }, 90); });
+$("tog").addEventListener("click", () => { $("tog").classList.toggle("on"); playEv("toggle"); });
+$("bLock").addEventListener("click", e => { playEv("locked"); e.currentTarget.classList.remove("shake"); void e.currentTarget.offsetWidth; e.currentTarget.classList.add("shake"); });
+document.querySelectorAll("#tabs button").forEach(b => b.addEventListener("click", () => { document.querySelectorAll("#tabs button").forEach(x => x.classList.remove("on")); b.classList.add("on"); playEv("tab"); }));
+const slotIcons = ["🗡️", "🪓", "🏹", "🧪"];
+slotIcons.forEach((ic, i) => $("slots").insertAdjacentHTML("beforeend", `<div class="m slot ${["blue","purple","green","gold"][i]}" data-slot="${i}"><span class="k">${i + 1}</span>${ic}</div>`));
+function selectSlot(i) { document.querySelectorAll("[data-slot]").forEach(s => s.classList.toggle("sel", +s.dataset.slot === i)); playEv("slot"); }
+document.querySelectorAll("[data-slot]").forEach(s => s.addEventListener("click", () => selectSlot(+s.dataset.slot)));
+$("vary").value = vary; $("varyV").textContent = vary + " %";
+$("vary").oninput = () => { vary = +$("vary").value; store("kitSoundVary", vary); $("varyV").textContent = vary + " %"; };
+renderAll();
+</script></body></html>
